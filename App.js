@@ -9,7 +9,7 @@ export default class App extends React.Component {
       <View>
         <Text>Hello, this is the new page.</Text>
         <Text>This is the second line.</Text>
-        <StatusBar hidden={true}/>
+        <StatusBar hidden={false}/>
         
       </View>
     );
