@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {View, StyleSheet, Text, Button, ListView, StatusBar  } from 'react-native';
+import {View, StyleSheet, Text, Button, ListView, StatusBar,TouchableHighlight  } from 'react-native';
 
 export default class App extends React.Component {
 
@@ -25,10 +25,19 @@ export default class App extends React.Component {
     return (
       <View style= {[styles.container, {backgroundColor}]}>
         
+        <TouchableHighlight style={styles.button} onPress={() => this.changeColor('yellow')} underlayColor="orange">
+          <View style={styles.row}>
 
-        <Text onPress={() => this.changeColor('green')} style={styles.button}>Green</Text>
-        <Text onPress={() => this.changeColor('red')} style={styles.button}>Red</Text>
+              <View style={[
+                styles.sample, 
+                {backgroundColor: 'yellow'}
+              ]}/>
 
+              <Text style={styles.text}>yellow</Text>
+
+          </View>          
+        </TouchableHighlight>
+        
         <StatusBar hidden={false}/>
         
       </View>
@@ -48,12 +57,34 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    borderWidth: 2,
-    borderRadius: 10,
-    fontSize: 20,
     margin: 10,
     padding: 10,
+    borderWidth: 2,
+    borderRadius: 10,
     
+    backgroundColor: 'rgba(255,255,255, .8)'
+    
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center'
+
+  },
+
+  sample: {
+    height: 20,
+    width: 20,
+    borderRadius: 10,
+    margin: 5,
+    backgroundColor: 'white'
+  },
+  text: {
+
+    fontSize: 30,
+    margin: 5,
+
+
+
   }
 
 });
