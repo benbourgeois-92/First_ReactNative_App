@@ -8,7 +8,7 @@ export default class App extends React.Component {
     return (
       <View>
         <Text>Hello, this is the new page.</Text>
-        <Text>This is the second line.</Text>
+        <Text>This is the color-list.</Text>
         <StatusBar hidden={false}/>
         
       </View>
