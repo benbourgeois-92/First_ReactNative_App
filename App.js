@@ -1,15 +1,34 @@
 import React from 'react';
 
-import {View, Text, Button, ListView, StatusBar, } from 'react-native';
+import {View, StyleSheet, Text, Button, ListView, StatusBar  } from 'react-native';
 
 export default class App extends React.Component {
-  render (){
 
+  constructor(){
+    super();
+    this.state = {
+      backgroundColor: 'blue'
+
+
+    }
+
+    this.changeColor = this.changeColor.bind(this);
+  }
+
+  changeColor(color){
+    this.setState({
+      backgroundColor: color
+    });
+  }
+  render (){
+    const {backgroundColor} = this.state;
     return (
-      <View>
-        <Text>Hello, this is the new page.</Text>
-        <Text>This is the color-list.</Text>
-        <Text>This is also the color-list.</Text>
+      <View style= {[styles.container, {backgroundColor}]}>
+        
+
+        <Text onPress={() => this.changeColor('green')} style={styles.button}>Green</Text>
+        <Text onPress={() => this.changeColor('red')} style={styles.button}>Red</Text>
+
         <StatusBar hidden={false}/>
         
       </View>
@@ -19,40 +38,25 @@ export default class App extends React.Component {
 }
 
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'yellow',
+  },
 
+  button: {
+    borderWidth: 2,
+    borderRadius: 10,
+    fontSize: 20,
+    margin: 10,
+    padding: 10,
+    
+  }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+});
 
 
 
