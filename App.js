@@ -1,6 +1,8 @@
 import React from 'react';
 
-import {View, StyleSheet, Text, Button, ListView, StatusBar,TouchableHighlight  } from 'react-native';
+import {ScrollView, StyleSheet,  Button, ListView, StatusBar, } from 'react-native';
+
+import ColorButton from "./components/ColorButton.js";
 
 export default class App extends React.Component {
 
@@ -8,7 +10,6 @@ export default class App extends React.Component {
     super();
     this.state = {
       backgroundColor: 'blue'
-
 
     }
 
@@ -21,26 +22,31 @@ export default class App extends React.Component {
     });
   }
   render (){
+
     const {backgroundColor} = this.state;
+
     return (
-      <View style= {[styles.container, {backgroundColor}]}>
+      <ScrollView style= {[styles.container, {backgroundColor}]}>
         
-        <TouchableHighlight style={styles.button} onPress={() => this.changeColor('yellow')} underlayColor="orange">
-          <View style={styles.row}>
+        <ColorButton backgroundColor="red" onSelect={(color) => this.changeColor(color)}/>
+        <ColorButton backgroundColor="blue" onSelect={(color) => this.changeColor(color)}/>
+        <ColorButton backgroundColor="green" onSelect={(color) => this.changeColor(color)}/>
 
-              <View style={[
-                styles.sample, 
-                {backgroundColor: 'yellow'}
-              ]}/>
+        <ColorButton backgroundColor="salmon" onSelect={(color) => this.changeColor(color)}/>
+        <ColorButton backgroundColor="skyblue" onSelect={(color) => this.changeColor(color)}/>
+        <ColorButton backgroundColor="azure" onSelect={(color) => this.changeColor(color)}/>
 
-              <Text style={styles.text}>yellow</Text>
 
-          </View>          
-        </TouchableHighlight>
-        
+        <ColorButton backgroundColor="purple" onSelect={(color) => this.changeColor(color)}/>
+        <ColorButton backgroundColor="black" onSelect={(color) => this.changeColor(color)}/>
+        <ColorButton backgroundColor="brown" onSelect={(color) => this.changeColor(color)}/>
+
+         <ColorButton backgroundColor="darkgreen" onSelect={(color) => this.changeColor(color)}/>
+        <ColorButton backgroundColor="blueViolet" onSelect={(color) => this.changeColor(color)}/>
+        <ColorButton backgroundColor="CornflowerBlue" onSelect={(color) => this.changeColor(color)}/>
         <StatusBar hidden={false}/>
         
-      </View>
+      </ScrollView>
     );
     
   }
@@ -50,42 +56,10 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: 'yellow',
-  },
-
-  button: {
-    margin: 10,
-    padding: 10,
-    borderWidth: 2,
-    borderRadius: 10,
-    
-    backgroundColor: 'rgba(255,255,255, .8)'
-    
-  },
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center'
-
-  },
-
-  sample: {
-    height: 20,
-    width: 20,
-    borderRadius: 10,
-    margin: 5,
-    backgroundColor: 'white'
-  },
-  text: {
-
-    fontSize: 30,
-    margin: 5,
-
-
+    paddingTop: 20
 
   }
+
 
 });
 
