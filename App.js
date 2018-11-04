@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {ScrollView, StyleSheet,  Button, ListView, StatusBar, } from 'react-native';
+import {StyleSheet,  Button, ListView, StatusBar, Text} from 'react-native';
 
 import ColorButton from "./components/ColorButton.js";
 
@@ -8,8 +8,17 @@ export default class App extends React.Component {
 
   constructor(){
     super();
+
+    this.ds = new ListView.DataSource({
+      rowHasChanged: (r1, r2) => r1 !== r2
+    });
+
+    const availableColors = ['red', 'green', 'yellow', 'azure', 'salmon', 'pink', 'purple', 'black'];
+
     this.state = {
-      backgroundColor: 'blue'
+      backgroundColor: 'blue',
+      availableColors,
+      dataSource: this.ds.cloneWithRows(availableColors)
 
     }
 
@@ -26,27 +35,23 @@ export default class App extends React.Component {
     const {backgroundColor} = this.state;
 
     return (
-      <ScrollView style= {[styles.container, {backgroundColor}]}>
+      <ListView style= {[styles.container, {backgroundColor}]}
+        renderHeader={() => (
+
+          <Text style={styles.header}>Color List</Text>
+
+        )}
+        dataSource={this.state.dataSource} 
+        renderRow={(color) => (
+        <ColorButton backgroundColor={color} onSelect={(color) => this.changeColor(color)}/>
+      )} >
         
-        <ColorButton backgroundColor="red" onSelect={(color) => this.changeColor(color)}/>
-        <ColorButton backgroundColor="blue" onSelect={(color) => this.changeColor(color)}/>
-        <ColorButton backgroundColor="green" onSelect={(color) => this.changeColor(color)}/>
-
-        <ColorButton backgroundColor="salmon" onSelect={(color) => this.changeColor(color)}/>
-        <ColorButton backgroundColor="skyblue" onSelect={(color) => this.changeColor(color)}/>
-        <ColorButton backgroundColor="azure" onSelect={(color) => this.changeColor(color)}/>
-
-
-        <ColorButton backgroundColor="purple" onSelect={(color) => this.changeColor(color)}/>
-        <ColorButton backgroundColor="black" onSelect={(color) => this.changeColor(color)}/>
-        <ColorButton backgroundColor="brown" onSelect={(color) => this.changeColor(color)}/>
-
-         <ColorButton backgroundColor="darkgreen" onSelect={(color) => this.changeColor(color)}/>
-        <ColorButton backgroundColor="blueViolet" onSelect={(color) => this.changeColor(color)}/>
-        <ColorButton backgroundColor="CornflowerBlue" onSelect={(color) => this.changeColor(color)}/>
-        <StatusBar hidden={false}/>
         
-      </ScrollView>
+  
+    
+  
+      </ListView>    
+      
     );
     
   }
@@ -58,6 +63,14 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 20
 
+  },
+
+  header: {
+    backgroundColor: 'lightgrey',
+    paddingTop: 20,
+    padding: 10,
+    fontSize: 30,
+    textAlign: 'center'
   }
 
 
