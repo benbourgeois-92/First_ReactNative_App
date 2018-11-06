@@ -1,6 +1,14 @@
 import React from 'react';
 import {StyleSheet, Text, View, TouchableHighlight} from 'react-native';
 
+
+
+
+
+
+//=f=>f is a default placeholder function. onSelect refers to a function, but if a function
+//isn't sent it allows the component to still work.
+
 const ColorButton = ({backgroundColor, onSelect=f=>f }) => (
 
     <TouchableHighlight style={styles.button} onPress={() => onSelect(backgroundColor)} underlayColor="orange">

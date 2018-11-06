@@ -3,6 +3,7 @@ import React from 'react';
 import {StyleSheet,  Button, ListView, StatusBar, Text} from 'react-native';
 
 import ColorButton from "./components/ColorButton.js";
+import ColorForm from "./components/ColorForm.js";
 
 export default class App extends React.Component {
 
@@ -13,7 +14,7 @@ export default class App extends React.Component {
       rowHasChanged: (r1, r2) => r1 !== r2
     });
 
-    const availableColors = ['red', 'green', 'yellow', 'azure', 'salmon', 'pink', 'purple', 'black'];
+    const availableColors = ['red', 'green', 'yellow'];
 
     this.state = {
       backgroundColor: 'blue',
@@ -23,6 +24,7 @@ export default class App extends React.Component {
     }
 
     this.changeColor = this.changeColor.bind(this);
+    this.newColor = this.newColor.bind(this);
   }
 
   changeColor(color){
@@ -30,6 +32,19 @@ export default class App extends React.Component {
       backgroundColor: color
     });
   }
+  newColor(color){
+    const availableColors = [...this.state.availableColors,
+    color];
+
+    this.setState({
+      availableColors,
+      dataSource: this.ds.cloneWithRows(availableColors)
+    });
+
+  }
+
+
+
   render (){
 
     const {backgroundColor} = this.state;
@@ -38,7 +53,7 @@ export default class App extends React.Component {
       <ListView style= {[styles.container, {backgroundColor}]}
         renderHeader={() => (
 
-          <Text style={styles.header}>Color List</Text>
+          <ColorForm onNewColor={this.newColor} />
 
         )}
         dataSource={this.state.dataSource} 
