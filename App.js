@@ -1,6 +1,8 @@
 import React from 'react';
 
-import {StyleSheet,  Button, ListView, StatusBar, Text} from 'react-native';
+import {AsycStorage, StyleSheet,  Button, ListView, StatusBar, Text} from 'react-native';
+
+
 
 import ColorButton from "./components/ColorButton.js";
 import ColorForm from "./components/ColorForm.js";
@@ -14,7 +16,7 @@ export default class App extends React.Component {
       rowHasChanged: (r1, r2) => r1 !== r2
     });
 
-    const availableColors = ['red', 'green', 'yellow'];
+    const availableColors = ['red'];
 
     this.state = {
       backgroundColor: 'blue',
@@ -25,6 +27,35 @@ export default class App extends React.Component {
 
     this.changeColor = this.changeColor.bind(this);
     this.newColor = this.newColor.bind(this);
+    this.saveColors = this.saveColors.bind(this);
+    
+  }
+
+  componentDidMount(){
+    AsycStorage.getItem(
+      '@ColorListStore:Colors', 
+    (err, data) => {
+      if (err){
+        console.error("Error loading colors", err)
+      } else {
+        //data is received as a string. JSON.parse turns data into object
+        const availableColors = JSON.parse(data);
+        this.setState({
+          availableColors,
+          dataSource: this.ds.cloneWithRows(availableColors)
+        });
+      }
+    });
+  }
+
+  saveColors(colors){
+
+    //JSON.stringify transforms an object into string for later extraction with JSON.parse
+    // (!)--- appears semi-colon sensitive
+    AsycStorage.setItem(
+      '@ColorListStore:Colors',
+      JSON.stringify(colors)
+      )
   }
 
   changeColor(color){
@@ -32,6 +63,7 @@ export default class App extends React.Component {
       backgroundColor: color
     });
   }
+
   newColor(color){
     const availableColors = [...this.state.availableColors,
     color];
@@ -41,6 +73,7 @@ export default class App extends React.Component {
       dataSource: this.ds.cloneWithRows(availableColors)
     });
 
+    this.saveColors(availableColors);
   }
 
 
